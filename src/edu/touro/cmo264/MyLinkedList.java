@@ -17,12 +17,19 @@ public class MyLinkedList implements List<String> {
 
     @Override
     public int size() {
-        return 0;
+        Node current = head;
+        int size = 0;
+        while (current != null)
+        {
+            current = current.next;
+            size++;
+        }
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return head==null;
     }
 
     @Override
@@ -47,7 +54,21 @@ public class MyLinkedList implements List<String> {
 
     @Override
     public boolean add(String s) {
-        return false;
+        Node newNode = new Node();
+        newNode.data = s;
+        newNode.next = null;
+        if (head == null) {
+            head = newNode;
+        }
+        else{
+            Node lastNode = head;
+            while (lastNode.next != null)
+            {
+                lastNode = lastNode.next;
+            }
+            lastNode.next = newNode;
+        }
+        return true;
     }
 
     @Override
@@ -82,12 +103,12 @@ public class MyLinkedList implements List<String> {
 
     @Override
     public void clear() {
-
+        head = null;
     }
 
     @Override
     public String get(int index) {
-        return null;
+        return getNode(index).data;
     }
 
     @Override
@@ -95,9 +116,45 @@ public class MyLinkedList implements List<String> {
         return null;
     }
 
+    void checkIndexInRange(int index, boolean isSizeLegal)
+    {
+        int maxLegalValue = isSizeLegal ? size() : size()-1;
+        if (index > maxLegalValue || index < 0)
+            throw new IndexOutOfBoundsException(String.format("Index [%d] is greater than maximum value[%d] List size [&d]", index, maxLegalValue, size()));
+    }
+
+    Node getNode(int index) {
+        checkIndexInRange(index, false);
+        Node current = head;
+        int counter = 0;
+        while (counter < index) {
+            current = current.next;
+            counter++;
+        }
+        return current;
+    }
+
     @Override
     public void add(int index, String element) {
+        checkIndexInRange(index, true);
 
+        Node newNode = new Node();
+        newNode.data = element;
+
+        if (head == null) { // no need to check index = 0, since checkIndexInRange did that
+            head = newNode;
+        }
+        else {
+            if (index == 0) {
+                newNode.next = head;
+                head = newNode;
+            } else {
+                Node spliceNode = getNode(index - 1);
+
+                newNode.next = spliceNode.next; // newNode next must point to whatever followed the spliceNode
+                spliceNode.next = newNode;
+            }
+        }
     }
 
     @Override
