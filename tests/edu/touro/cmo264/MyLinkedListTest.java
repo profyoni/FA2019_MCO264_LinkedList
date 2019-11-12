@@ -5,10 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MyLinkedListTest {
-
+    MyLinkedList list = new MyLinkedList();
     @Test
     void size() {
-        MyLinkedList list = new MyLinkedList();
         list.add("A");
         list.add("B");
         list.add("C");
@@ -21,17 +20,26 @@ class MyLinkedListTest {
     }
 
     @Test
-    void add() {
-        MyLinkedList list = new MyLinkedList();
+    void add0() {
         list.add(0,"A");
         assertEquals(list.size(),1);
         assertEquals(list.get(0),"A");
+    }
+
+    @Test
+    void add1() {
 
         list.add(0,"B");
         assertEquals(list.size(),2);
         assertEquals(list.get(0),"B");
         assertEquals(list.get(1),"A");
 
+
+    }    @Test
+    void add3() {
+
+        list.add(0,"A");
+        list.add(0,"B");
         list.add(1,"C");
 
         assertEquals(list.size(),3);

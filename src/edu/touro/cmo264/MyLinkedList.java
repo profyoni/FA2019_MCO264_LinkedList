@@ -8,28 +8,26 @@ import java.util.ListIterator;
 class Node
 {
     String data;
-    Node next;
+    Node prev, next;
 }
 
 public class MyLinkedList implements List<String> {
 
     private Node head;
+    private int size = 0;
 
+    public MyLinkedList()
+    {
+        head = new Node(); // dummy node to simplify / clean up code
+    }
     @Override
     public int size() {
-        Node current = head;
-        int size = 0;
-        while (current != null)
-        {
-            current = current.next;
-            size++;
-        }
         return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return head==null;
+        return size==0;
     }
 
     @Override
@@ -57,17 +55,13 @@ public class MyLinkedList implements List<String> {
         Node newNode = new Node();
         newNode.data = s;
         newNode.next = null;
-        if (head == null) {
-            head = newNode;
+
+        Node lastNode = head;
+        while (lastNode.next != null) {
+            lastNode = lastNode.next;
         }
-        else{
-            Node lastNode = head;
-            while (lastNode.next != null)
-            {
-                lastNode = lastNode.next;
-            }
-            lastNode.next = newNode;
-        }
+        lastNode.next = newNode;
+        size++;
         return true;
     }
 
@@ -104,6 +98,7 @@ public class MyLinkedList implements List<String> {
     @Override
     public void clear() {
         head = null;
+        size=0;
     }
 
     @Override
