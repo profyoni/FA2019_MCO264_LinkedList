@@ -6,11 +6,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PalindromeTest {
 
+    /**
+     * Case insensitive palindrome check
+     * @param s
+     * @return
+     */
     public static boolean isPalindrome(String s)
     {
         for (int i=0;i<s.length()/2;i++)
         {
-            if (s.charAt(i) != s.charAt(s.length() - i - 1))
+            if (Character.toUpperCase(s.charAt(i)) != Character.toUpperCase(s.charAt(s.length() - i - 1)))
                 return false; // returning early
         }
         return true;
