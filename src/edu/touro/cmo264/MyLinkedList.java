@@ -5,10 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-class Node
+class FRaction // behaves like a static inner class
 {
-    String data;
-    Node prev, next;
+    int n, d;
 }
 
 public class MyLinkedList implements List<String> {
@@ -19,6 +18,16 @@ public class MyLinkedList implements List<String> {
     public MyLinkedList()
     {
         head = new Node(); // dummy node to simplify / clean up code
+    }
+    public MyLinkedList(Collection<? extends String> c)
+    {
+        this();
+        addAll(c);
+    }
+
+    private void bomb(MyLinkedList ll)
+    {
+        ll.head.next = ll.head;
     }
     @Override
     public int size() {
@@ -37,7 +46,7 @@ public class MyLinkedList implements List<String> {
 
     @Override
     public Iterator<String> iterator() {
-        return null;
+        return new MyLinkedListIterator();
     }
 
     @Override
@@ -77,6 +86,11 @@ public class MyLinkedList implements List<String> {
 
     @Override
     public boolean addAll(Collection<? extends String> c) {
+        for(String s : c)
+        {
+            add(s);
+        }
+        // needs more
         return false;
     }
 
@@ -181,4 +195,23 @@ public class MyLinkedList implements List<String> {
     public List<String> subList(int fromIndex, int toIndex) {
         return null;
     }
+
+    private static class Node // private inner class. Static since it does not need access to the Outer class = LinkedList class
+    {
+        String data;
+        Node prev, next;
+    }
+
+    private class MyLinkedListIterator implements Iterator<String> { // not static since it needs to access
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public String next() {
+            return null;
+        }
+    }
 }
+
